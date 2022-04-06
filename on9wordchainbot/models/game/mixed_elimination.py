@@ -45,16 +45,16 @@ class MixedEliminationGame(EliminationGame):
             starting_letter = self.current_word[0]
         else:
             starting_letter = self.current_word[-1]
-        text += f"Your word must start with <i>{starting_letter.upper()}</i>"
+        text += f"Sözcüğün <i>{starting_letter.upper()}</i> ile başlamalıdır."
 
         if self.game_mode is BannedLettersGame:
-            text += f" and <b>exclude</b> <i>{', '.join(c.upper() for c in self.banned_letters)}</i>"
+            text += f" ve <b>hariç</b> <i>{', '.join(c.upper() in self.banned_letters)}</i>"
         elif self.game_mode is RequiredLetterGame:
-            text += f" and <b>include</b> <i>{self.required_letter.upper()}</i>"
+            text += f" ve <b>dahil</b> <i>{self.required_letter.upper()}</i>"
         text += ".\n"
 
-        text += f"You have <b>{self.time_limit}s</b> to answer.\n\n"
-        text += "Leaderboard:\n" + self.get_leaderboard(show_player=self.players_in_game[0])
+        text += f"Yanıtlamanız gereken <b>{self.time_limit}s</b> süreniz var.\n\n"
+        text += "Skor tablosu:\n" + self.get_leaderboard(show_player=self.players_in_game[0])
         await self.send_message(text, parse_mode=types.ParseMode.HTML)
 
         # Reset per-turn attributes
@@ -76,23 +76,23 @@ class MixedEliminationGame(EliminationGame):
         if self.game_mode is ChosenFirstLetterGame:
             if not word.startswith(self.current_word[0]):
                 await message.reply(
-                    f"_{word.capitalize()}_ does not start with _{self.current_word[0].upper()}_.",
+                    f"_{word.capitalize()}_, _{self.current_word[0].upper()}_ ile başlamıyor.",
                     allow_sending_without_reply=True
                 )
                 return
         elif not word.startswith(self.current_word[-1]):
             await message.reply(
-                f"_{word.capitalize()}_ does not start with _{self.current_word[-1].upper()}_.",
+                f"_{word.capitalize()}_ _{self.current_word[-1].upper()}_ ile başlamıyor.",
                 allow_sending_without_reply=True
             )
             return
 
         if word in self.used_words:
-            await message.reply(f"_{word.capitalize()}_ has been used.", allow_sending_without_reply=True)
+            await message.reply(f"_{word.capitalize()}_ kullanıldı.", allow_sending_without_reply=True)
             return
         if not check_word_existence(word):
             await message.reply(
-                f"_{word.capitalize()}_ is not in my list of words.",
+                f"_{word.capitalize()}_ kelime listemde yok.",
                 allow_sending_without_reply=True
             )
             return
@@ -129,18 +129,18 @@ class MixedEliminationGame(EliminationGame):
 
         await self.send_message(
             (
-                f"The first word is <i>{self.current_word.capitalize()}</i>.\n\n"
-                "Turn order:\n"
+                f"İlk kelime <i>{self.current_word.capitalize()}</i>.\n\n"
+                "Siparişi çevirin:\n"
                 + "\n".join(p.mention for p in self.players_in_game)
             ),
             parse_mode=types.ParseMode.HTML
         )
 
-        round_text = f"Round 1 is starting...\nMode: <b>{self.game_mode.name.capitalize()}</b>"
+        round_text = f"1. Tur başlıyor...\nMod: <b>{self.game_mode.name.capitalize()}</b>"
         if self.game_mode is ChosenFirstLetterGame:
-            round_text += f"\nThe chosen first letter is <i>{self.current_word[0].upper()}</i>."
+            round_text += f"\nSeçilen ilk harf <i>{self.current_word[0].upper()}</i>."
         elif self.game_mode is BannedLettersGame:
-            round_text += f"\nBanned letters: <i>{', '.join(c.upper() for c in self.banned_letters)}</i>"
+            round_text += f"\nYasaklanan harfler: <i>{', '.join(c.upper() self.banned_letters)}</i>"
         round_text += "\n\nLeaderboard:\n" + self.get_leaderboard()
         await self.send_message(round_text, parse_mode=types.ParseMode.HTML)
 
@@ -161,7 +161,7 @@ class MixedEliminationGame(EliminationGame):
         self.turns_until_elimination = len(self.players_in_game)
         self.set_game_mode()
 
-        round_text = f"Round {self.round} is starting...\nMode: <b>{self.game_mode.name.capitalize()}</b>"
+        round_text = f"{self.round} turu başlıyor...\nMod: <b>{self.game_mode.name.capitalize()}</b>"
         if self.game_mode is ChosenFirstLetterGame:
             # The last letter of the current word becomes the chosen first letter
             self.current_word = self.current_word[-1]
