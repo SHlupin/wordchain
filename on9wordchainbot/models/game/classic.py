@@ -85,8 +85,8 @@ class ClassicGame:
             self.players.append(player)
 
             await self.send_message(
-                f"{player.name} joined. There {'is' if len(self.players) == 1 else 'are'} now "
-                f"{len(self.players)} player{'' if len(self.players) == 1 else 's'}.",
+                f"{player.name} katıldı. Şimdi {'is' if len(self.players) == 1 else 'are'} var "
+                f"{len(self.players)} oyuncu{'' if len(self.players) == 1 else 's'}.",
                 parse_mode=types.ParseMode.HTML
             )
 
@@ -114,8 +114,8 @@ class ClassicGame:
                 self.players_in_game.append(player)
 
             await self.send_message(
-                f"{player.name} was forced to join. There {'is' if len(self.players) == 1 else 'are'} now "
-                f"{len(self.players)} player{'' if len(self.players) == 1 else 's'}.",
+                f"{player.name} katılmak zorunda kaldı. Şimdi {'is' if len(self.players) == 1 else 'are'} var "
+                f"{len(self.players)} oyuncu{'' if len(self.players) == 1 else 's'}.",
                 parse_mode=types.ParseMode.HTML
             )
 
@@ -138,8 +138,8 @@ class ClassicGame:
                 return
 
             await self.send_message(
-                f"{player.name} fled. There {'is' if len(self.players) == 1 else 'are'} now "
-                f"{len(self.players)} player{'' if len(self.players) == 1 else 's'}.",
+                f"{player.name} kaçtı. Şimdi {'is' if len(self.players) == 1 else 'are'} var "
+                f"{len(self.players)} oyuncu{'' if len(self.players) == 1 else 's'}.",
                 parse_mode=types.ParseMode.HTML
             )
 
@@ -159,8 +159,8 @@ class ClassicGame:
                 return
 
             await self.send_message(
-                f"{player.name} was forced to flee. There {'is' if len(self.players) == 1 else 'are'} now "
-                f"{len(self.players)} player{'' if len(self.players) == 1 else 's'}.",
+                f"{player.name} kaçmak zorunda kaldı. Şimdi {'is' if len(self.players) == 1 else 'are'} var "
+                f"{len(self.players)} oyuncu{'' if len(self.players) == 1 else 's'}.",
                 parse_mode=types.ParseMode.HTML
             )
 
@@ -179,7 +179,7 @@ class ClassicGame:
                 and not self.user_in_game(message.from_user.id)
                 and not await self.is_admin(message.from_user.id)
             ):
-                await self.send_message("Imagine not playing")
+                await self.send_message("oynamadığını hayal et")
                 return
 
             try:
@@ -188,7 +188,7 @@ class ClassicGame:
                 assert vp.is_chat_member() or vp.is_chat_admin()
             except (BadRequest, AssertionError):
                 await self.send_message(
-                    f"Add [On9Bot](tg://user?id={on9bot.id}) here to play as a virtual player.",
+                    f"Sanal oyuncu olarak oynamak için buraya [Mytoyun](tg://user?id={on9bot.id}) ekleyin.",
                     reply_markup=ADD_ON9BOT_TO_GROUP_KEYBOARD
                 )
                 return
@@ -199,8 +199,8 @@ class ClassicGame:
             await on9bot.send_message(self.group_id, "/join@" + (await bot.me).username)
             await self.send_message(
                 (
-                    f"{vp.name} joined. There {'is' if len(self.players) == 1 else 'are'} now "
-                    f"{len(self.players)} player{'' if len(self.players) == 1 else 's'}."
+                    f"{vp.name} katıldı. Şimdi {'is' if len(self.players) == 1 else 'are'} var "
+                    f"{len(self.players)} oyuncu{'' if len(self.players) == 1 else 's'}."
                 ),
                 parse_mode=types.ParseMode.HTML
             )
@@ -237,8 +237,8 @@ class ClassicGame:
             await on9bot.send_message(self.group_id, "/flee@" + (await bot.me).username)
             await self.send_message(
                 (
-                    f"{vp.name} fled. There {'is' if len(self.players) == 1 else 'are'} now "
-                    f"{len(self.players)} player{'' if len(self.players) == 1 else 's'}."
+                    f"{vp.name} kaçtı. Şimdi {'is' if len(self.players) == 1 else 'are'} var "
+                    f"{len(self.players)} oyuncu{'' if len(self.players) == 1 else 's'}."
                 ),
                 parse_mode=types.ParseMode.HTML
             )
@@ -269,7 +269,7 @@ class ClassicGame:
                 n = 30
                 is_neg = False
         elif message.from_user.id in self.extended_user_ids:
-            await self.send_message("You can only extend once peasant")
+            await self.send_message("Sadece bir kez uzatabilirsin köylü")
             return
         else:
             self.extended_user_ids.add(message.from_user.id)
@@ -279,7 +279,7 @@ class ClassicGame:
         if is_neg:
             # Reduce joining phase time (admins only)
             if not await self.is_admin(message.from_user.id):
-                await self.send_message("Imagine not being admin")
+                await self.send_message("Admin olmadığını düşün")
                 return
 
             if n >= self.time_left:
@@ -288,8 +288,8 @@ class ClassicGame:
             else:
                 self.time_left -= n
                 await self.send_message(
-                    f"The joining phase has been reduced by {n}s.\n"
-                    f"You have {self.time_left}s to /join."
+                    f"Birleştirme aşaması {n}s azaltıldı.\n"
+                    f"{self.time_left} hakkınız var /join."
                 )
         else:
             # Extend joining phase time
@@ -304,12 +304,12 @@ class ClassicGame:
     async def send_turn_message(self) -> None:
         await self.send_message(
             (
-                f"Turn: {self.players_in_game[0].mention} (Next: {self.players_in_game[1].name})\n"
-                f"Your word must start with <i>{self.current_word[-1].upper()}</i> and "
-                f"include <b>at least {self.min_letters_limit} letters</b>.\n"
-                f"You have <b>{self.time_limit}s</b> to answer.\n"
-                f"Players remaining: {len(self.players_in_game)}/{len(self.players)}\n"
-                f"Total words: {self.turns}"
+                f"Dönüş: {self.players_in_game[0].mention} (Sonraki: {self.players_in_game[1].name})\n"
+                f"Sözcüğünüz <i>{self.current_word[-1].upper()}</i> ile başlamalıdır ve "
+                f"<b>en az {self.min_letters_limit} harf</b> içerir.\n"
+                f"Yanıtlamanız gereken <b>{self.time_limit}s</b> süreniz var.\n"
+                f"Kalan oyuncular: {len(self.players_in_game)}/{len(self.players)}\n"
+                f"Toplam kelime: {self.turns}"
             ),
             parse_mode=types.ParseMode.HTML
         )
@@ -360,23 +360,23 @@ class ClassicGame:
         # Check if answer is invalid
         if not word.startswith(self.current_word[-1]):
             await message.reply(
-                f"_{word.capitalize()}_ does not start with _{self.current_word[-1].upper()}_.",
+                f"_{word.capitalize()}_, _{self.current_word[-1].upper()} ile başlamıyor_.",
                 allow_sending_without_reply=True
             )
             return
         # No minimum letters limit for elimination game modes
         if not isinstance(self, EliminationGame) and len(word) < self.min_letters_limit:
             await message.reply(
-                f"_{word.capitalize()}_ has less than {self.min_letters_limit} letters.",
+                f"_{word.capitalize()}_, {self.min_letters_limit} harften daha az harf içeriyor.",
                 allow_sending_without_reply=True
             )
             return
         if word in self.used_words:
-            await message.reply(f"_{word.capitalize()}_ has been used.", allow_sending_without_reply=True)
+            await message.reply(f"_{word.capitalize()}_ kullanıldı.", allow_sending_without_reply=True)
             return
         if not check_word_existence(word):
             await message.reply(
-                f"_{word.capitalize()}_ is not in my list of words.",
+                f"_{word.capitalize()}_ kelime listemde yok.",
                 allow_sending_without_reply=True
             )
             return
@@ -412,22 +412,22 @@ class ClassicGame:
         self.accepting_answers = False
 
     async def send_post_turn_message(self, word: str) -> None:
-        text = f"_{word.capitalize()}_ is accepted.\n\n"
+        text = f"_{word.capitalize()}_ kabul edilir.\n\n"
         # Reduce limits if possible every set number of turns
         if self.turns % GameSettings.TURNS_BETWEEN_LIMITS_CHANGE == 0:
             if self.time_limit > GameSettings.MIN_TURN_SECONDS:
                 self.time_limit -= GameSettings.TURN_SECONDS_REDUCTION_PER_LIMIT_CHANGE
                 text += (
-                    f"Time limit decreased from "
-                    f"*{self.time_limit + GameSettings.TURN_SECONDS_REDUCTION_PER_LIMIT_CHANGE}s* "
-                    f"to *{self.time_limit}s*.\n"
+                    f"Zaman sınırı düşürüldü "
+                    f"*{self.time_limit + GameSettings.TURN_SECONDS_REDUCTION_PER_LIMIT_CHANGE} sn* "
+                    f"*{self.time_limit}s* kadar.\n"
                 )
             if self.min_letters_limit < GameSettings.MAX_WORD_LENGTH_LIMIT:
                 self.min_letters_limit += GameSettings.WORD_LENGTH_LIMIT_INCREASE_PER_LIMIT_CHANGE
                 text += (
-                    f"Minimum letters per word increased from "
+                    f"Kelime başına minimum harf arttı "
                     f"*{self.min_letters_limit - GameSettings.WORD_LENGTH_LIMIT_INCREASE_PER_LIMIT_CHANGE}* "
-                    f"to *{self.min_letters_limit}*.\n"
+                    f"*{self.min_letters_limit}* kadar.\n"
                 )
         await self.send_message(text)
 
@@ -439,8 +439,8 @@ class ClassicGame:
 
         await self.send_message(
             (
-                f"The first word is <i>{self.current_word.capitalize()}</i>.\n\n"
-                "Turn order:\n"
+                f"İlk kelime <i>{self.current_word.capitalize()}</i>.\n\n"
+                "Siparişi çevirin:\n"
                 + "\n".join(p.mention for p in self.players_in_game)
             ),
             parse_mode=types.ParseMode.HTML
@@ -461,7 +461,7 @@ class ClassicGame:
             # Timer ran out
             self.accepting_answers = False
             await self.send_message(
-                f"{self.players_in_game[0].mention} ran out of time! They have been eliminated.",
+                f"{self.players_in_game[0].mention} süresi doldu! elendiler.",
                 parse_mode=types.ParseMode.HTML
             )
             del self.players_in_game[0]
@@ -480,12 +480,12 @@ class ClassicGame:
         game_len_str = f"{int(td.total_seconds()) // 3600:02}{str(td)[-6:]}"
 
         winner = self.players_in_game[0].mention if self.players_in_game else "No one"
-        text = f"{winner} won the game out of {len(self.players)} players!\n"
-        text += f"Total words: {self.turns}\n"
+        text = f"{kazanan}, {len(self.players)} oyuncu arasından oyunu kazandı!\n"
+        text += f"Toplam kelime: {self.turns}\n"
         if self.longest_word:
             longest_word_sender_name = [p for p in self.players if p.user_id == self.longest_word_sender_id][0].name
-            text += f"Longest word: <i>{self.longest_word.capitalize()}</i> from {longest_word_sender_name}\n"
-        text += f"Game length: <code>{game_len_str}</code>"
+            text += f"En uzun kelime: <i>{self.longest_word.capitalize()}</i> from {longest_word_sender_name}\n"
+        text += f"Oyun uzunluğu: <code>{game_len_str}</code>"
         await self.send_message(text, parse_mode=types.ParseMode.HTML)
 
         GlobalState.games.pop(self.group_id, None)
@@ -572,9 +572,9 @@ class ClassicGame:
             if self.state == GameState.KILLGAME or self.group_id not in GlobalState.games:
                 return  # Game already killed
 
-        await send_admin_group(f"Prolonged stale/negative timer detected in group `{self.group_id}`. Game terminated.")
+        await send_admin_group(f""{self.group_id}" grubunda uzun süreli eski/negatif zamanlayıcı algılandı. Oyun sonlandırıldı.")
         try:
-            await self.send_message("Game timer is malfunctioning. Game terminated.")
+            await self.send_message("Oyun zamanlayıcısı arızalı. Oyun sonlandırıldı.")
         except:
             pass
 
@@ -585,8 +585,8 @@ class ClassicGame:
         negative_timer = 0
         try:
             await self.send_message(
-                f"A{'n' if self.name[0] in 'aeiou' else ''} {self.name} is starting.\n"
-                f"{self.min_players}-{self.max_players} players are needed.\n"
+                f"bir{'n' if self.name[0] in 'aeiou' else ''} {self.name} başlıyor.\n"
+                f"{self.min_players}-{self.max_players} oyuncuya ihtiyaç var.\n"
                 f"{self.time_left}s to /join."
             )
             await self.join(message)
@@ -597,14 +597,14 @@ class ClassicGame:
                     if self.time_left > 0:
                         self.time_left -= 1
                         if self.time_left in (15, 30, 60):
-                            await self.send_message(f"{self.time_left}s left to /join.")
+                            await self.send_message(f"{self.time_left} sn kaldı /join.")
                     elif len(self.players) < self.min_players:
-                        await self.send_message("Not enough players. Game terminated.")
+                        await self.send_message("Yeterli değil.")
                         del GlobalState.games[self.group_id]
                         return
                     else:
                         self.state = GameState.RUNNING
-                        await self.send_message("Game is starting...")
+                        await self.send_message("Oyun başlıyor...")
 
                         random.shuffle(self.players)
                         self.players_in_game = self.players[:]
@@ -616,7 +616,7 @@ class ClassicGame:
                     if self.time_left < 0:
                         negative_timer += 1
                     if negative_timer >= 5:
-                        raise ValueError("Prolonged negative timer.")
+                        raise ValueError("Uzun süreli negatif zamanlayıcı.")
 
                     if await self.running_phase_tick():  # True: Game ended
                         await self.update_db()
@@ -629,8 +629,8 @@ class ClassicGame:
             GlobalState.games.pop(self.group_id, None)
             try:
                 await self.send_message(
-                    f"Game ended due to the following error:\n`{e.__class__.__name__}: {e}`.\n"
-                    "My owner will be notified."
+                    f"Oyun şu hata nedeniyle sona erdi:\n`{e.__class__.__name__}: {e}`.\n"
+                    "sahibim bilgilendirilecek."
                 )
             except:
                 pass
