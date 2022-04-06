@@ -33,17 +33,17 @@ async def cmd_stats(message: types.Message) -> None:
         return
 
     mention = user.get_mention(
-        name=user.full_name + (" \u2b50\ufe0f" if await has_star(user.id) else ""), as_html=True
+        name=user.full_name + (" \u2b50\ufe0f" has_star(user.id) başka bekliyorsa ""), as_html=True
     )
     text = (
-        f"\U0001f4ca Statistics for {mention}:\n"
-        f"<b>{res['game_count']}</b> games played\n"
-        f"<b>{res['win_count']} ({res['win_count'] / res['game_count']:.0%})</b> games won\n"
-        f"<b>{res['word_count']}</b> total words played\n"
-        f"<b>{res['letter_count']}</b> total letters played"
+        f"\U0001f4ca {mention} için istatistikler:\n"
+        f"<b>{res['game_count']}</b> oynanan oyun\n"
+        f"<b>{res['win_count']} ({res['win_count'] / res['game_count']:.0%})</b> oyun kazandı\n"
+        f"<b>{res['word_count']}</b> oynanan toplam kelime\n"
+        f"<b>{res['letter_count']}</b> oynanan toplam harf"
     )
     if res["longest_word"]:
-        text += f"\nLongest word: <b>{res['longest_word'].capitalize()}</b>"
+        text += f"\nEn uzun kelime: <b>{res['longest_word'].capitalize()}</b>"
     await message.reply(text, parse_mode=types.ParseMode.HTML, allow_sending_without_reply=True)
 
 
@@ -61,11 +61,11 @@ async def cmd_groupstats(message: types.Message) -> None:
         )
     await message.reply(
         (
-            f"\U0001f4ca Statistics for <b>{quote_html(message.chat.title)}</b>\n"
-            f"<b>{player_cnt}</b> players\n"
-            f"<b>{game_cnt}</b> games played\n"
-            f"<b>{word_cnt}</b> total words played\n"
-            f"<b>{letter_cnt}</b> total letters played"
+            f"\<b>{quote_html(message.chat.title)}</b> için U0001f4ca İstatistikleri\n"
+            f"<b>{player_cnt}</b> oyuncular\n"
+            f"<b>{game_cnt}</b> oynanan oyunlar\n"
+            f"<b>{word_cnt}</b> oynanan toplam kelime\n"
+            f"<b>{letter_cnt}</b> oynanan toplam harf"
         ),
         parse_mode=types.ParseMode.HTML,
         allow_sending_without_reply=True
@@ -77,14 +77,14 @@ async def get_global_stats() -> str:
     async def get_cnt_1() -> Tuple[int, int]:
         async with pool.acquire() as conn:
             group_cnt, game_cnt = await conn.fetchrow(
-                "SELECT COUNT(DISTINCT group_id), COUNT(*) FROM game;"
+                "SAYI SEÇ(DISTINCT group_id), COUNT(*) oyundan;"
             )
         return group_cnt, game_cnt
 
     async def get_cnt_2() -> Tuple[int, int, int]:
         async with pool.acquire() as conn:
             player_cnt, word_cnt, letter_cnt = await conn.fetchrow(
-                "SELECT COUNT(*), SUM(word_count), SUM(letter_count) FROM player;"
+                "Oyuncudan SAYI SEÇ(*), SUM(kelime_sayısı), SUM(harf_sayısı);"
             )
             return player_cnt, word_cnt, letter_cnt
 
@@ -94,12 +94,12 @@ async def get_global_stats() -> str:
     player_cnt, word_cnt, letter_cnt = await get_cnt_2_task
 
     return (
-        "\U0001f4ca Global statistics\n"
-        f"*{group_cnt}* groups\n"
-        f"*{player_cnt}* players\n"
-        f"*{game_cnt}* games played\n"
-        f"*{word_cnt}* total words played\n"
-        f"*{letter_cnt}* total letters played"
+        "\U0001f4ca Küresel istatistikler\n"
+        f"*{group_cnt}* gruplar\n"
+        f"*{player_cnt}* oyuncular\n"
+        f"*{game_cnt}* oynanan oyunlar\n"
+        f"*{word_cnt}* oynanan toplam kelime\n"
+        f"*{letter_cnt}* oynanan toplam harf"
     )
 
 
@@ -331,26 +331,26 @@ async def cmd_trends(message: types.Message) -> None:
         colors=["xkcd:" + c for c in colors[len(colors) - len(game_mode_play_cnt):]],
         startangle=90
     )
-    plt.legend(slices, labels, title="Game Modes Played", fontsize="x-small", loc="best")
+    plt.legend(slices, labels, title="Oynanan Oyun Modları", fontsize="x-small", loc="best")
     plt.axis("equal")
 
     sp = plt.subplot(235)
     sp.xaxis.set_major_formatter(f)
     sp.yaxis.set_major_locator(MaxNLocator(integer=True))
     plt.setp(sp.xaxis.get_majorticklabels(), rotation=45, horizontalalignment="right")
-    plt.title("Cumulative Groups", size=18)
+    plt.title("Kümülatif Gruplar", size=18)
     plt.plot(tp, [cumulative_groups[i] for i in tp])
 
     sp = plt.subplot(236)
     sp.xaxis.set_major_formatter(f)
     sp.yaxis.set_major_locator(MaxNLocator(integer=True))
     plt.setp(sp.xaxis.get_majorticklabels(), rotation=45, horizontalalignment="right")
-    plt.title("Cumulative Players", size=18)
+    plt.title("Kümülatif Oyuncular", size=18)
     plt.plot(tp, [cumulative_players[i] for i in tp])
 
     # Save the plot as a jpg and send it
     plt.savefig("trends.jpg", bbox_inches="tight")
     plt.close("all")
     async with aiofiles.open("trends.jpg", "rb") as f:
-        await message.reply_photo(f, caption=f"Generation time: `{time.time() - t:.3f}s`")
+        await message.reply_photo(f, caption=f"Oluşturma süresi: `{time.time() - t:.3f}s`")
     await aiofiles.os.remove("trends.jpg")
