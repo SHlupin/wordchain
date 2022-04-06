@@ -1,5 +1,5 @@
 {
-    "name": "wordchainbot",
+    "name": "wordmytbot",
     "description": "A telegram wordchain bot",
     "stack": "container",
     "keywords": [
@@ -10,8 +10,8 @@
       "wordchain",
       "bot"
     ],
-    "website": "https://github.com/Akbotmakersnew",
-    "repository": "https://github.com/Akbotmakersnew/wordchainbot",
+    "website": "https://github.com/01-Meyitzade-01",
+    "repository": "https://github.com/01-Meyitzade-01/MytOyun",
     "env": {
          "TOKEN": {
          "description": "A Telegram bot token from @botfather.",
