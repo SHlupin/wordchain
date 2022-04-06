@@ -19,8 +19,8 @@ from ..words import Words
 async def cmd_start(message: types.Message) -> None:
     await message.reply(
         (
-            "Hi! I host games of word chain in Telegram groups.\n"
-            "Add me to a group to start playing games!"
+            "Selam! Telegram gruplarında kelime zinciri oyunlarına ev sahipliği yapıyorum.\n"
+            "Oyun oynamaya başlamak için beni bir gruba ekleyin!"
         ),
         disable_web_page_preview=True, allow_sending_without_reply=True,
         reply_markup=ADD_TO_GROUP_KEYBOARD
@@ -42,22 +42,22 @@ async def cmd_feedback(message: types.Message) -> None:
     if not arg:
         await message.reply(
             (
-                "Function: Send feedback to my owner.\n"
-                f"Usage: `/feedback@{(await bot.me).username} feedback`"
+                "İşlev: Sahibime geri bildirim gönder.\n"
+                f"Kullanım: `/feedback@{(await bot.me).username} geribildirim`"
             ),
             allow_sending_without_reply=True
         )
         return
 
     asyncio.create_task(message.forward(ADMIN_GROUP_ID))
-    asyncio.create_task(message.reply("Feedback sent successfully.", allow_sending_without_reply=True))
+    asyncio.create_task(message.reply("Geri bildirim başarıyla gönderildi.", allow_sending_without_reply=True))
 
 
 @dp.message_handler(is_owner=True, commands="maintmode")
 async def cmd_maintmode(message: types.Message) -> None:
     GlobalState.maint_mode = not GlobalState.maint_mode
     await message.reply(
-        f"Maintenance mode has been switched {'on' if GlobalState.maint_mode else 'off'}.",
+        f"Bakım modu {'on' if GlobalState.maint_mode else 'off'} olarak değiştirildi.",
         allow_sending_without_reply=True
     )
 
@@ -92,14 +92,14 @@ async def cmd_sql(message: types.Message) -> None:
 async def new_member(message: types.Message) -> None:
     if any(user.id == bot.id for user in message.new_chat_members):  # self added to group
         await message.reply(
-            "Thanks for adding me. Start a classic game with /startclassic!",
+            "Beni eklediğin için teşekkürler. /startclassic ile klasik bir oyun başlatın!",
             reply=False
         )
     elif message.chat.id == OFFICIAL_GROUP_ID:
         await message.reply(
             (
-                "Welcome to the official On9 Word Chain group!\n"
-                "Start a classic game with /startclassic!"
+                "Resmi MYT Kelime Zinciri grubuna hoş geldiniz!\n"
+                "/startclassic ile klasik bir oyun başlatın!"
             ),
             allow_sending_without_reply=True
         )
@@ -128,8 +128,8 @@ async def inline_handler(inline_query: types.InlineQuery):
             [
                 types.InlineQueryResultArticle(
                     id=str(uuid4()),
-                    title="A query can only consist of alphabets",
-                    description="Try a different query",
+                    title="Bir sorgu yalnızca alfabelerden oluşabilir",
+                    description="Farklı bir sorgu deneyin",
                     input_message_content=types.InputTextMessageContent(r"¯\\_(ツ)\_/¯")
                 )
             ],
@@ -154,8 +154,8 @@ async def inline_handler(inline_query: types.InlineQuery):
         res.append(
             types.InlineQueryResultArticle(
                 id=str(uuid4()),
-                title="No results found",
-                description="Try a different query",
+                title="Sonuç bulunamadı",
+                description="Farklı bir sorgu deneyin",
                 input_message_content=types.InputTextMessageContent(r"¯\\_(ツ)\_/¯")
             )
         )
@@ -182,19 +182,19 @@ async def error_handler(update: types.Update, error: TelegramAPIError) -> None:
     if isinstance(error, (BotKicked, BotBlocked, CantInitiateConversation, InvalidQueryID)):
         return
     if isinstance(error, BadRequest) and str(error) in (
-        "Have no rights to send a message",
-        "Not enough rights to send text messages to the chat",
-        "Group chat was deactivated",
+        "Mesaj gönderme hakkın yok",
+        "Sohbete kısa mesaj göndermek için yeterli hak yok",
+        "Grup sohbeti devre dışı bırakıldı",
         "Chat_write_forbidden",
         "Channel_private"
     ):
         return
     if isinstance(error, Unauthorized):
-        if str(error).startswith("Forbidden: bot is not a member"):
+        if str(error).startswith("Yasak: bot üye değil"):
             return
-        if str(error).startswith("Forbidden: bot was kicked"):
+        if str(error).startswith("Yasak: bot atıldı"):
             return
-    if str(error).startswith("Internal Server Error: sent message was immediately deleted"):
+    if str(error).startswith("Dahili Sunucu Hatası: gönderilen mesaj hemen silindi"):
         return
 
     if isinstance(error, MigrateToChat):  # TODO: Test
@@ -236,7 +236,7 @@ async def error_handler(update: types.Update, error: TelegramAPIError) -> None:
 
     asyncio.create_task(
         update.message.reply(
-            f"Error occurred (`{error.__class__.__name__}`). My owner has been notified.",
+            f"Hata oluştu (`{error.__class__.__name__}`). sahibim bilgilendirildi.",
             allow_sending_without_reply=True
         )
     )
@@ -244,7 +244,7 @@ async def error_handler(update: types.Update, error: TelegramAPIError) -> None:
     if group_id in GlobalState.games:
         asyncio.create_task(
             send_admin_msg.reply(
-                f"Killing game in {group_id} consequently.",
+                f"Sonuç olarak {group_id} içinde oyun öldürme.",
                 allow_sending_without_reply=True
             )
         )
@@ -254,4 +254,4 @@ async def error_handler(update: types.Update, error: TelegramAPIError) -> None:
         # If game is still not terminated
         if group_id in GlobalState.games:
             del GlobalState.games[group_id]
-            await update.message.reply("Game ended forcibly.", allow_sending_without_reply=True)
+            await update.message.reply("Oyun zorla sona erdi.", allow_sending_without_reply=True)
