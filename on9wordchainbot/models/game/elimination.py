@@ -95,10 +95,10 @@ class EliminationGame(ClassicGame):
                 f"Turn: {self.players_in_game[0].mention}"
                 # Do not show next player on queue if this is last turn of the round
                 # Since they could be eliminated
-                + (f" (Next: {self.players_in_game[1].name})\n" if self.turns_until_elimination > 1 else "\n")
-                + f"Your word must start with <i>{self.current_word[-1].upper()}</i>.\n"
-                  f"You have <b>{self.time_limit}s</b> to answer.\n\n"
-                  "Leaderboard:\n" + self.get_leaderboard(show_player=self.players_in_game[0])
+                + (f" (Sonraki: {self.players_in_game[1].name})\n" if self.turns_until_elimination > 1 başka "\n")
+                + f"Sözcüğün <i>{self.current_word[-1].upper()}</i> ile başlamalıdır.\n"
+                  f"Yanıtlamanız gereken <b>{self.time_limit}s</b> süreniz var.\n\n"
+                  "Liderler Sıralaması:\n" + self.get_leaderboard(show_player=self.players_in_game[0])
             ),
             parse_mode=types.ParseMode.HTML
         )
@@ -117,7 +117,7 @@ class EliminationGame(ClassicGame):
     async def send_post_turn_message(self, word: str) -> None:
         text = f"_{word.capitalize()}_ is accepted."
         if self.exceeded_score_limit:
-            text += f"\nThat is a long word! It will only count for {GameSettings.ELIM_MAX_TURN_SCORE} points."
+            text += f"\nBu uzun bir kelime! Yalnızca {GameSettings.ELIM_MAX_TURN_SCORE} puan için sayılır."
             self.exceeded_score_limit = False
         await self.send_message(text)
         # No limit reduction
@@ -130,8 +130,8 @@ class EliminationGame(ClassicGame):
 
         await self.send_message(
             (
-                f"The first word is <i>{self.current_word.capitalize()}</i>.\n\n"
-                "Turn order:\n"
+                f"İlk kelime <i>{self.current_word.capitalize()}</i>.\n\n"
+                "Siparişi çevirin:\n"
                 + "\n".join(p.mention for p in self.players_in_game)
             ),
             parse_mode=types.ParseMode.HTML
@@ -146,7 +146,7 @@ class EliminationGame(ClassicGame):
                 return False
             self.accepting_answers = False
             await self.send_message(
-                f"{self.players_in_game[0].mention} ran out of time!",
+                f"{self.players_in_game[0].mention} süresi doldu!",
                 parse_mode=types.ParseMode.HTML
             )
 
@@ -173,7 +173,7 @@ class EliminationGame(ClassicGame):
         self.turns_until_elimination = len(self.players_in_game)
 
         await self.send_message(
-            f"Round {self.round} is starting...\n\nLeaderboard:\n" + self.get_leaderboard(),
+            f"{self.round} turu başlıyor...\n\nSkor tablosu:\n" + self.get_leaderboard(),
             parse_mode=types.ParseMode.HTML
         )
 
@@ -190,8 +190,8 @@ class EliminationGame(ClassicGame):
                 + "\n\n"
                 + ", ".join(p.mention for p in eliminated)
                 + " "
-                + ("is" if len(eliminated) == 1 else "are")
-                + f" eliminated for having the lowest score of {min_score}."
+                + ("is" if len(elendi) == 1 else "are")
+                + f" {min_score} ile en düşük puana sahip olduğu için elendi."
             ),
             parse_mode=types.ParseMode.HTML
         )
