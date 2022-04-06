@@ -19,8 +19,8 @@ class ChosenFirstLetterGame(ClassicGame):
 
         await self.send_message(
             (
-                f"The chosen first letter is <i>{self.current_word.upper()}</i>.\n\n"
-                "Turn order:\n"
+                f"Seçilen ilk harf <i>{self.current_word.upper()}</i>'dir.\n\n"
+                "Siparişi çevirin:\n"
                 + "\n".join(p.mention for p in self.players_in_game)
             ),
             parse_mode=types.ParseMode.HTML
