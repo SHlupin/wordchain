@@ -6,7 +6,7 @@ from decimal import ROUND_HALF_UP, getcontext
 from aiogram import executor
 from periodic import Periodic
 
-from on9wordchainbot import dp, loop, pool, session
+from on9wordchainbot import dp, loop, pool, session, on9wordchainbot
 from on9wordchainbot.words import Words
 
 random.seed(time.time())
