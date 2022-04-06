@@ -14,12 +14,12 @@ class ChaosGame(ClassicGame):
     async def send_turn_message(self) -> None:
         await self.send_message(
             (
-                f"Turn: {self.players_in_game[0].mention}\n"
-                f"Your word must start with <i>{self.current_word[-1].upper()}</i> and "
-                f"contain <b>at least {self.min_letters_limit} letters</b>.\n"
-                f"You have <b>{self.time_limit}s</b> to answer.\n"
-                f"Players remaining: {len(self.players_in_game)}/{len(self.players)}\n"
-                f"Total words: {self.turns}"
+                f"Dönüş: {self.players_in_game[0].mention}\n"
+                f"Sözcüğünüz <i>{self.current_word[-1].upper()}</i> ile başlamalıdır ve "
+                f"<b>en az {self.min_letters_limit} harf</b> içerir.\n"
+                f"Yanıtlamanız gereken <b>{self.time_limit}s</b> süreniz var.\n"
+                f"Kalan oyuncular: {len(self.players_in_game)}/{len(self.players)}\n"
+                f"Toplam kelime: {self.turns}"
             ),
             parse_mode=types.ParseMode.HTML
         )
@@ -39,7 +39,7 @@ class ChaosGame(ClassicGame):
         self.start_time = datetime.now().replace(microsecond=0)
 
         # No turn order
-        await self.send_message(f"The first word is _{self.current_word.capitalize()}_.")
+        await self.send_message(f"İlk kelime _{self.current_word.capitalize()}_.")
 
     async def running_phase_tick(self) -> bool:
         if self.answered:
