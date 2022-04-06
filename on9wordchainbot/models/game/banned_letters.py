@@ -22,14 +22,14 @@ class BannedLettersGame(ClassicGame):
     async def send_turn_message(self) -> None:
         await self.send_message(
             (
-                f"Turn: {self.players_in_game[0].mention} (Next: {self.players_in_game[1].name})\n"
-                f"Your word must start with <i>{self.current_word[-1].upper()}</i>, "
-                f"<b>exclude</b> <i>{', '.join(c.upper() for c in self.banned_letters)}</i> and "
-                f"include <b>at least {self.min_letters_limit} "
+                f"Dönüş: {self.players_in_game[0].mention} (Sonraki: {self.players_in_game[1].name})\n"
+                f"Sözcüğünüz <i>{self.current_word[-1].upper()}</i> ile başlamalıdır., "
+                f"<b>hariç tut</b> <i>{', '.join(c.upper() for self.banned_letters)}</i> ve "
+                f"<b>en az {self.min_letters_limit} ekleyin "
                 f"letter{'' if self.min_letters_limit == 1 else 's'}</b>.\n"
-                f"You have <b>{self.time_limit}s</b> to answer.\n"
-                f"Players remaining: {len(self.players_in_game)}/{len(self.players)}\n"
-                f"Total words: {self.turns}"
+                f"Yanıtlamanız gereken <b>{self.time_limit}s</b> süreniz var.\n"
+                f"Kalan oyuncular: {len(self.players_in_game)}/{len(self.players)}\n"
+                f"Toplam kelime: {self.turns}"
             ),
             parse_mode=types.ParseMode.HTML
         )
@@ -54,8 +54,8 @@ class BannedLettersGame(ClassicGame):
         used_banned_letters = sorted(set(word) & set(self.banned_letters))
         if used_banned_letters:
             await message.reply(
-                f"_{word.capitalize()}_ contains banned letters "
-                f"({', '.join(c.upper() for c in used_banned_letters)}).",
+                f"_{word.capitalize()}_ yasaklı harfler içeriyor "
+                f"({', '.join(c.upper(), use_banned_letters içindeki c için)}).",
                 allow_sending_without_reply=True
             )
             return False
@@ -89,9 +89,9 @@ class BannedLettersGame(ClassicGame):
 
         await self.send_message(
             (
-                f"The first word is <i>{self.current_word.capitalize()}</i>.\n"
-                f"Banned letters: <i>{', '.join(c.upper() for c in self.banned_letters)}</i>\n\n"
-                "Turn order:\n"
+                f"İlk kelime <i>{self.current_word.capitalize()}</i>.\n"
+                f"Yasaklanan harfler: <i>{', '.join(c.upper() self.banned_letters)}</i>\n\n"
+                "Siparişi çevirin:\n"
                 + "\n".join(p.mention for p in self.players_in_game)
             ),
             parse_mode=types.ParseMode.HTML
