@@ -24,8 +24,8 @@ class RandomFirstLetterGame(ClassicGame):
         self.start_time = datetime.now().replace(microsecond=0)
 
         await self.send_message(
-            f"The first word is <i>{self.current_word.capitalize()}</i>.\n\n"
-            "Turn order:\n"
+            f"İlk kelime <i>{self.current_word.capitalize()}</i>.\n\n"
+            "Siparişi çevirin:\n"
             + "\n".join(p.mention for p in self.players_in_game),
             parse_mode=types.ParseMode.HTML
         )
