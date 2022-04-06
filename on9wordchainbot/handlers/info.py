@@ -18,7 +18,7 @@ from ..words import Words
 async def cmd_help(message: types.Message) -> None:
     if message.chat.id < 0:
         await message.reply(
-            "Please use this command in private.",
+            "Lütfen bu komutu özel olarak kullanın.",
             allow_sending_without_reply=True,
             reply_markup=inline_keyboard_from_button(
                 types.InlineKeyboardButton("Help message", url=await get_start_link("help"))
@@ -28,16 +28,16 @@ async def cmd_help(message: types.Message) -> None:
 
     await message.reply(
         (
-            "/gameinfo - Game mode descriptions\n"
-            "/troubleshoot - Resolve common issues\n"
-            "/reqaddword - Request addition of words\n"
-            "/feedback - Send feedback to bot owner\n\n"
-            "You may message [Jono](tg://user?id=463998526) "
-            "in *English / Cantonese* if you have issues with the bot.\n"
-            "Official Group: @on9wordchain\n"
-            "Word Additions Channel (with status updates): @on9wcwa\n"
-            "Source Code: [jonowo/on9wordchainbot](https://github.com/jonowo/on9wordchainbot)\n"
-            "Epic icon designed by [Adri](tg://user?id=303527690)"
+            "/gameinfo - Oyun modu açıklamaları\n"
+            "/troubleshoot - Sık karşılaşılan sorunları çözün\n"
+            "/reqaddword - Sözcük eklenmesini iste\n"
+            "/feedback - Bot sahibine geri bildirim gönder\n\n"
+            "[Sen](tg://settings. "
+            "botla ilgili sorunlarınız varsa *İngilizce / Türkçe* dilinde.\n"
+            "Group: @HirasetTR\n"
+            "Channel (durum güncellemeleri): @hiraset\n"
+            "Source Code: [Meyitzade](https://t.me/meyitzade47)\n"
+            "Tarafından tasarlanan destansı simge [Adri](tg://user?id=303527690)"
         ),
         disable_web_page_preview=True,
         allow_sending_without_reply=True
@@ -49,20 +49,20 @@ async def cmd_help(message: types.Message) -> None:
 async def cmd_gameinfo(message: types.Message) -> None:
     await message.reply(
         (
-            "/startclassic - Classic game\n"
-            "Players take turns to send words starting with the last letter of the previous word.\n\n"
+            "/startclassic - Klasik oyun\n"
+            "Oyuncular sırayla bir önceki kelimenin son harfiyle başlayan kelimeleri gönderir.\n\n"
             "Variants:\n"
-            "/starthard - Hard mode game\n"
-            "/startchaos - Chaos game (random turn order)\n"
-            "/startcfl - Chosen first letter game\n"
-            "/startrfl - Random first letter game\n"
-            "/startbl - Banned letters game\n"
-            "/startrl - Required letter game\n\n"
-            "/startelim - Elimination game\n"
-            "Each player's score is their cumulative word length. "
-            "The lowest scoring players are eliminated after each round.\n\n"
-            "/startmelim - Mixed elimination game (donation reward)\n"
-            "Elimination game with different modes. Try at @on9wordchain."
+            "/starthard - Zor mod oyunu\n"
+            "/startchaos - Kaos oyunu (rastgele dönüş sırası)\n"
+            "/startcfl - Seçilen ilk harf oyunu\n"
+            "/startrfl - Rastgele ilk harf oyunu\n"
+            "/startbl - Yasaklı harfler oyunu\n"
+            "/startrl - Gerekli harf oyunu\n\n"
+            "/startelim - Eleme oyunu\n"
+            "Her oyuncunun puanı, toplam kelime uzunluğudur.. "
+            "En düşük puan alan oyuncular her turdan sonra elenir.\n\n"
+            "/startmelim - Karışık eleme oyunu\n"
+            "Farklı modlara sahip  oyun @mytdcbot'de deneyin."
         ),
         allow_sending_without_reply=True
     )
@@ -73,19 +73,19 @@ async def cmd_gameinfo(message: types.Message) -> None:
 async def cmd_troubleshoot(message: types.Message) -> None:
     await message.reply(
         (
-            "These steps assume you have admin privileges. "
-            "If you do not, please ask a group admin to check instead.\n\n"
-            "<b>If the bot does not respond to <code>/start[mode]</code></b>, check if:\n"
-            "1. The bot is absent from / muted in your group "
-            "\u27a1\ufe0f Add the bot to your group / Unmute the bot\n"
-            "2. Slow mode is enabled \u27a1\ufe0f Disable slow mode\n"
-            "3. Someone spammed commands in your group recently "
-            "\u27a1\ufe0f The bot is rate limited in your group, wait patiently\n"
-            "4. The bot does not respond to <code>/ping</code> "
-            "\u27a1\ufe0f The bot is likely offline, check @on9wcwa for status updates\n\n"
-            "<b>If the bot cannot be added to your group</b>:\n"
-            "1. There can be at most 20 bots in a group. Check if this limit is reached.\n\n"
-            "If you encounter other issues, please contact <a href='tg://user?id=463998526'>my owner</a>."
+            "Bu adımlar, yönetici ayrıcalıklarına sahip olduğunuzu varsayar.. "
+            "Bunu yapmazsanız, lütfen bunun yerine bir grup yöneticisinden kontrol etmesini isteyin.\n\n"
+            "<b>Bot, <code>/start[mode]</code></b> işlevine yanıt vermiyorsa, şunları kontrol edin:\n"
+            "1. Bot, grubunuzda yok / sessize alındı "
+            "\u27a1\ufe0f Botu grubunuza ekleyin / Botun sesini açın\n"
+            "2. Yavaş mod etkin \u27a1\ufe0f Yavaş modu devre dışı bırak\n"
+            "3. Birisi son zamanlarda grubunuzdaki komutları spam olarak gönderdi "
+            "\u27a1\ufe0f Grubunuzda botun hızı sınırlı, sabırla bekleyin\n"
+            "4. Bot, <code>/ping</code>'e yanıt vermiyor "
+            "\u27a1\ufe0f Bot büyük olasılıkla çevrimdışı, durum güncellemeleri için @hiraset  kontrol edin\n\n"
+            "<b>Bot grubunuza eklenemiyorsa</b>:\n"
+            "1. Bir grupta en fazla 20 bot olabilir. Bu sınıra ulaşılıp ulaşılmadığını kontrol edin.\n\n"
+            "Başka sorunlarla karşılaşırsanız, lütfen sahibim ile iletişime geçin. @meyitzade47"
         ),
         parse_mode=types.ParseMode.HTML,
         allow_sending_without_reply=True
