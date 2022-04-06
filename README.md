@@ -1,16 +1,16 @@
 # Word Chain Bot
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Akbotmakersnew/wordchainbot)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/01-Meyitzade-01/MytOyun)
 
 
-(Epic icon by [@AdriTheDreamer](https://github.com/AdriTheDreamer)) 
+(Epic icon by [sahip](https://github.com/AdriTheDreamer)) 
 
 On9 Word Chain Bot hosts games of word chain in Telegram groups.
 
 ### Telegram Links
-- [On9 Word Chain Bot](https://t.me/on9wordchainbot) (Live Version)
-- [Official Group](https://t.me/on9wordchain)
-- [Word Additions Channel](https://t.me/on9wcwa)
+- [MytOyunBot](https://t.me/MytOyunBot) (Live Version)
+- [Group](https://t.me/HirasetTR)
+- [Channel](https://t.me/hiraset)
 
 ### Roadmap
 - Make required letter game more reasonable
