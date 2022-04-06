@@ -70,10 +70,10 @@ def inline_keyboard_from_button(button: types.InlineKeyboardButton) -> types.Inl
 
 
 ADD_TO_GROUP_KEYBOARD = inline_keyboard_from_button(
-    types.InlineKeyboardButton("Add to group", url="https://t.me/on9wordchainbot?startgroup=_")
+    types.InlineKeyboardButton("Gruba ekle", url="https://t.me/MytOyunBot?startgroup=_")
 )
 ADD_ON9BOT_TO_GROUP_KEYBOARD = inline_keyboard_from_button(
-    types.InlineKeyboardButton("Add On9Bot to group", url="https://t.me/On9Bot?startgroup=_")
+    types.InlineKeyboardButton("MytGuardBot'u gruba ekle", url="https://t.me/mytproguardbot?startgroup=_")
 )
 
 
@@ -81,7 +81,7 @@ def send_private_only_message(f: Callable[..., Any]) -> Callable[..., Any]:
     @wraps(f)
     async def inner(message: types.Message, *args: Any, **kwargs: Any) -> None:
         if message.chat.id < 0:
-            await message.reply("Please use this command in private.", allow_sending_without_reply=True)
+            await message.reply("Lütfen bu komutu özel olarak kullanın.", allow_sending_without_reply=True)
             return
         await f(message, *args, **kwargs)
 
