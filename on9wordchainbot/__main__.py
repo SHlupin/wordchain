@@ -6,7 +6,8 @@ from decimal import ROUND_HALF_UP, getcontext
 from aiogram import executor
 from periodic import Periodic
 
-from on9wordchainbot import dp, loop, session
+from on9wordchainbot import dp, loop, pool, session
+from on9wordchainbot.utils import send_admin_group
 from on9wordchainbot.words import Words
 
 random.seed(time.time())
@@ -14,6 +15,9 @@ getcontext().rounding = ROUND_HALF_UP
 
 
 async def on_startup(_) -> None:
+    # Notify admin group
+    await send_admin_group("Bot starting.")
+
     await Words.update()
 
     # Update word list every 3 hours
