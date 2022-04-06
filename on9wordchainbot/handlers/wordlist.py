@@ -17,9 +17,9 @@ async def cmd_exists(message: types.Message) -> None:
         if not rmsg or not rmsg.text or not is_word(rmsg.text.lower()):
             await message.reply(
                 (
-                    "Function: Check if a word is in my dictionary. "
-                    "Use /reqaddword if you want to request addition of new words.\n"
-                    "Usage: `/exists word`"
+                    "İşlev: Sözlüğümde bir kelimenin olup olmadığını kontrol et. "
+                    "Yeni kelimelerin eklenmesini talep etmek istiyorsanız /reqaddword kullanın.\n"
+                    "Kullanım: `/exists var`"
                 ),
                 allow_sending_without_reply=True
             )
@@ -27,7 +27,7 @@ async def cmd_exists(message: types.Message) -> None:
         word = rmsg.text.lower()
 
     await message.reply(
-        f"_{word.capitalize()}_ is *{'' if check_word_existence(word) else 'not '}in* my dictionary.",
+        f"_{word.capitalize()}_, *{'' ise check_word_existence(word) değilse, sözlüğümde '}değildir*.",
         allow_sending_without_reply=True
     )
 
@@ -41,14 +41,14 @@ async def cmd_reqaddword(message: types.Message) -> None:
     if not words_to_add:
         await message.reply(
             (
-                "Function: Request new words. Check @on9wcwa for word list updates.\n"
-                "Before requesting a new word, please check that:\n"
-                "- It is an English word (\u274c other languages)\n"
-                "- It is spelled correctly\n"
-                "- It is not a [proper noun](https://simple.wikipedia.org/wiki/Proper_noun) "
+                "İşlev: Yeni kelimeler isteyin. Kelime listesi güncellemeleri için @meyitzade47'ye yazın.\n"
+                "Yeni bir kelime istemeden önce lütfen şunları kontrol edin:\n"
+                "- Türkçe bir kelimedir (\u274c diğer diller)\n"
+                "- Doğru yazılmış\n"
+                "- Bu bir [özel isim](https://simple.wikipedia.org/wiki/Proper_noun) değil "
                 "(\u274c names)\n"
-                "  (existing proper nouns in the word list and nationalities are exempt)\n"
-                "Usage: `/reqaddword word1 word2 ...`"
+                "  (kelime listesindeki mevcut özel isimler ve uyruklar hariçtir)\n"
+                "Kullanım: `/reqaddword kelime1 kelime2 ...`"
             ),
             disable_web_page_preview=True,
             allow_sending_without_reply=True
@@ -64,7 +64,7 @@ async def cmd_reqaddword(message: types.Message) -> None:
             words_to_add.remove(w)
 
     async with pool.acquire() as conn:
-        rej = await conn.fetch("SELECT word, reason FROM wordlist WHERE NOT accepted;")
+        rej = await conn.fetch("Kelimeyi SEÇİN, neden kelime listesinden kabul edilmediyse;")
     for word, reason in rej:
         if word not in words_to_add:
             continue
@@ -77,24 +77,24 @@ async def cmd_reqaddword(message: types.Message) -> None:
 
     text = ""
     if words_to_add:
-        text += f"Submitted {', '.join(['_' + w.capitalize() + '_' for w in words_to_add])} for approval.\n"
+        text += f"{', '.join(['_' + w.capitalize() + '_' for w inwords_to_add])} onay için gönderildi.\n"
         asyncio.create_task(
             send_admin_group(
                 message.from_user.get_mention(
                     name=message.from_user.full_name
-                         + (" \u2b50\ufe0f" if await has_star(message.from_user.id) else ""),
+                         + (" \u2b50\ufe0f" has_star(message.from_user.id) başka bir şey bekliyorsa ""),
                     as_html=True
                 )
-                + " is requesting the addition of "
+                + " eklenmesini talep ediyor "
                 + ", ".join(["<i>" + w.capitalize() + "</i>" for w in words_to_add])
-                + " to the word list. #reqaddword",
+                + " kelime listesine. #reqaddword",
                 parse_mode=types.ParseMode.HTML
             )
         )
     if existing:
-        text += f"{', '.join(existing)} {'is' if len(existing) == 1 else 'are'} already in the word list.\n"
+        text += f"{', '.join(existing)} {'is' if len(existing) == 1 else 'are'} zaten kelime listesinde.\n"
     if rejected:
-        text += f"{', '.join(rejected)} {'was' if len(rejected) == 1 else 'were'} rejected.\n"
+        text += f"{', '.join(rejected)} {'was' if len(rejected) == 1 else 'were'} reddedildi.\n"
     for word, reason in rejected_with_reason:
         text += f"{word} was rejected. Reason: {reason}.\n"
     await message.reply(text, allow_sending_without_reply=True)
@@ -116,7 +116,7 @@ async def cmd_addwords(message: types.Message) -> None:
             words_to_add.remove(w)
 
     async with pool.acquire() as conn:
-        rej = await conn.fetch("SELECT word, reason FROM wordlist WHERE NOT accepted;")
+        rej = await conn.fetch("Kelimeyi SEÇİN, neden kelime listesinden kabul edilmediyse;")
     for word, reason in rej:
         if word not in words_to_add:
             continue
@@ -131,13 +131,13 @@ async def cmd_addwords(message: types.Message) -> None:
     if words_to_add:
         async with pool.acquire() as conn:
             await conn.copy_records_to_table("wordlist", records=[(w, True, None) for w in words_to_add])
-        text += f"Added {', '.join(['_' + w.capitalize() + '_' for w in words_to_add])} to the word list.\n"
+        text += f"Kelime listesine {', '.join(['_' + w.capitalize() + '_' inwords_to_add])} eklendi.\n"
     if existing:
-        text += f"{', '.join(existing)} {'is' if len(existing) == 1 else 'are'} already in the word list.\n"
+        text += f"{', '.join(existing)} {'is' if len(existing) == 1 else 'are'} zaten kelime listesinde.\n"
     if rejected:
-        text += f"{', '.join(rejected)} {'was' if len(rejected) == 1 else 'were'} rejected.\n"
+        text += f"{', '.join(rejected)} {'was' if len(rejected) == 1 else 'were'} reddedildi.\n"
     for word, reason in rejected_with_reason:
-        text += f"{word} was rejected. Reason: {reason}.\n"
+        text += f"{word} reddedildi. Sebep: {reason}.\n"
     msg = await message.reply(text, allow_sending_without_reply=True)
 
     if not words_to_add:
@@ -146,12 +146,12 @@ async def cmd_addwords(message: types.Message) -> None:
     t = time.time()
     await Words.update()
     asyncio.create_task(
-        msg.edit_text(msg.md_text + f"\n\nWord list updated. Time taken: `{time.time() - t:.3f}s`")
+        msg.edit_text(msg.md_text + f"\n\nKelime listesi güncellendi. Geçen süre: `{time.time() - t:.3f}s`")
     )
     asyncio.create_task(
         bot.send_message(
             WORD_ADDITION_CHANNEL_ID,
-            f"Added {', '.join(['_' + w.capitalize() + '_' for w in words_to_add])} to the word list.",
+            f"Kelime listesine {', '.join(['_' + w.capitalize() + '_' için word_to_add])} eklendi.",
             disable_notification=True
         )
     )
@@ -183,6 +183,6 @@ async def cmd_rejword(message: types.Message) -> None:
         await message.reply(f"_{word}_ was already rejected.", allow_sending_without_reply=True)
     else:
         await message.reply(
-            f"_{word}_ was already rejected. Reason: {r['reason']}.",
+            f"_{word}_ zaten reddedildi. Sebep: {r['reason']}.",
             allow_sending_without_reply=True
         )
