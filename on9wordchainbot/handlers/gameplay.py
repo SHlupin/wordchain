@@ -23,8 +23,8 @@ async def start_game(message: types.Message, game_type: Type[ClassicGame]) -> No
         # Only stop people from starting games, not joining
         await message.reply(
             (
-                "Maintenance mode is on. Games are temporarily disabled.\n"
-                "This is likely due to a pending bot update."
+                "Bakım modu açık. Oyun geçici olarak devre dışı bırakıldı.\n"
+                "Bunun nedeni büyük olasılıkla bekleyen bir bot güncellemesidir.."
             ),
             allow_sending_without_reply=True
         )
@@ -34,8 +34,8 @@ async def start_game(message: types.Message, game_type: Type[ClassicGame]) -> No
     if message.chat.slow_mode_delay:
         await message.reply(
             (
-                "Slow mode is enabled in this group, so the bot cannot function properly.\n"
-                "If you are a group admin, please disable slow mode to start games."
+                "Bu grupta yavaş mod etkinleştirildiğinden bot düzgün çalışamaz.\n"
+                "Grup yöneticisi iseniz, oyunları başlatmak için lütfen yavaş modu devre dışı bırakın.."
             ),
             allow_sending_without_reply=True
         )
@@ -47,8 +47,8 @@ async def start_game(message: types.Message, game_type: Type[ClassicGame]) -> No
     ):
         await message.reply(
             (
-                "This game mode is a donation reward.\n"
-                "You can try this game mode at @on9wordchain."
+                "Bu oyun modu bir  ödüllüdür.\n"
+                "Bu oyundan ayrı @mytdcbot'u da deneyebilirsiniz.."
             ),
             allow_sending_without_reply=True
         )
@@ -180,7 +180,7 @@ async def cmd_incmaxp(message: types.Message) -> None:
     else:
         GlobalState.games[group_id].max_players = GameSettings.INCREASED_MAX_PLAYERS
     await message.reply(
-        f"This game can now accommodate {GlobalState.games[group_id].max_players} players.",
+        f"Bu oyun artık {GlobalState.games[group_id].max_players} oyuncuyu barındırabilir.",
         allow_sending_without_reply=True
     )
 
