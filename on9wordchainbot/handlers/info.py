@@ -36,8 +36,8 @@ async def cmd_help(message: types.Message) -> None:
             "botla ilgili sorunlarınız varsa *İngilizce / Türkçe* dilinde.\n"
             "Group: @mutsuz_panda\n"
             "Channel (durum güncellemeleri): @mutsuz_panda\n"
-            "Source Code: [Meyitzade](https://t.me/mutsuz_panda)\n"
-            "Tarafından tasarlanan destansı simge [Adri](tg://user?id=5360157654)"
+            "Source Code: [Gece kuşu](https://t.me/mutsuz_panda)\n"
+            "Tarafından tasarlanan destansı simge [Moon](tg://user?id=5360157654)"
         ),
         disable_web_page_preview=True,
         allow_sending_without_reply=True
