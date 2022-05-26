@@ -41,7 +41,7 @@ async def cmd_reqaddword(message: types.Message) -> None:
     if not words_to_add:
         await message.reply(
             (
-                "İşlev: Yeni kelimeler isteyin. Kelime listesi güncellemeleri için @meyitzade47'ye yazın.\n"
+                "İşlev: Yeni kelimeler isteyin. Kelime listesi güncellemeleri için @mutsuz_panda'ye yazın.\n"
                 "Yeni bir kelime istemeden önce lütfen şunları kontrol edin:\n"
                 "- Türkçe bir kelimedir (\u274c diğer diller)\n"
                 "- Doğru yazılmış\n"
