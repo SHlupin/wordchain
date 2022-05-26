@@ -34,10 +34,10 @@ async def cmd_help(message: types.Message) -> None:
             "/feedback - Bot sahibine geri bildirim gönder\n\n"
             "[Sen](tg://settings. "
             "botla ilgili sorunlarınız varsa *İngilizce / Türkçe* dilinde.\n"
-            "Group: @HirasetTR\n"
-            "Channel (durum güncellemeleri): @hiraset\n"
-            "Source Code: [Meyitzade](https://t.me/meyitzade47)\n"
-            "Tarafından tasarlanan destansı simge [Adri](tg://user?id=303527690)"
+            "Group: @mutsuz_panda\n"
+            "Channel (durum güncellemeleri): @mutsuz_panda\n"
+            "Source Code: [Meyitzade](https://t.me/mutsuz_panda)\n"
+            "Tarafından tasarlanan destansı simge [Adri](tg://user?id=5360157654)"
         ),
         disable_web_page_preview=True,
         allow_sending_without_reply=True
@@ -62,7 +62,7 @@ async def cmd_gameinfo(message: types.Message) -> None:
             "Her oyuncunun puanı, toplam kelime uzunluğudur.. "
             "En düşük puan alan oyuncular her turdan sonra elenir.\n\n"
             "/startmelim - Karışık eleme oyunu\n"
-            "Farklı modlara sahip  oyun @mytdcbot'de deneyin."
+            "Farklı modlara sahip  oyun @Emily_utagbot'de deneyin."
         ),
         allow_sending_without_reply=True
     )
@@ -82,10 +82,10 @@ async def cmd_troubleshoot(message: types.Message) -> None:
             "3. Birisi son zamanlarda grubunuzdaki komutları spam olarak gönderdi "
             "\u27a1\ufe0f Grubunuzda botun hızı sınırlı, sabırla bekleyin\n"
             "4. Bot, <code>/ping</code>'e yanıt vermiyor "
-            "\u27a1\ufe0f Bot büyük olasılıkla çevrimdışı, durum güncellemeleri için @hiraset  kontrol edin\n\n"
+            "\u27a1\ufe0f Bot büyük olasılıkla çevrimdışı, durum güncellemeleri için @mutsuz_panda kontrol edin\n\n"
             "<b>Bot grubunuza eklenemiyorsa</b>:\n"
             "1. Bir grupta en fazla 20 bot olabilir. Bu sınıra ulaşılıp ulaşılmadığını kontrol edin.\n\n"
-            "Başka sorunlarla karşılaşırsanız, lütfen sahibim ile iletişime geçin. @meyitzade47"
+            "Başka sorunlarla karşılaşırsanız, lütfen sahibim ile iletişime geçin. @mutsuz_panda"
         ),
         parse_mode=types.ParseMode.HTML,
         allow_sending_without_reply=True
