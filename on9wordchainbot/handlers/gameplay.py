@@ -48,7 +48,7 @@ async def start_game(message: types.Message, game_type: Type[ClassicGame]) -> No
         await message.reply(
             (
                 "Bu oyun modu bir  ödüllüdür.\n"
-                "Bu oyundan ayrı @mytdcbot'u da deneyebilirsiniz.."
+                "Bu oyundan ayrı @Emily_utagbot'u da deneyebilirsiniz.."
             ),
             allow_sending_without_reply=True
         )
